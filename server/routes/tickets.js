@@ -41,4 +41,29 @@ router.get('/open', async (req, res) => {
     }
 });
 
+// PATCH: claim a ticket
+router.patch('/claim/:id', async (req, res) => {
+    try {
+        const { helperId } = req.body;
+        const ticketId = req.params.id;
+
+        const claimedTicket = await Ticket.findByIdAndUpdate(
+            ticketId,
+            {
+                status: 'claimed',
+                claimedBy: helperId,
+                'timestamps.claimed': new Date(),
+            },
+            { new: true }
+        );
+        if (!claimedTicket) {
+            return res.status(404).json({ error: 'Ticket not found' });
+        }
+
+        res.status(200).json(claimedTicket);
+    } catch (err) {
+        res.status(500).json({ error: "Failed to claim ticket", details: err.message });
+    }
+});
+
 module.exports = router
