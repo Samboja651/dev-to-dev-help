@@ -24,7 +24,7 @@ const ticketSchema = new mongoose.Schema({
         enum: ['open', 'claimed', 'resolved'],
         default: 'open',
     },
-    createBy: {
+    createdBy: {
         type: String, // should ref userid
         required: true,
     },
