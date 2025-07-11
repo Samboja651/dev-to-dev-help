@@ -1,7 +1,23 @@
 import React from "react";
+import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
 
 const TicketDetails = ({ ticket }) => {
+    const handleClaim = () => {
+        axios
+            .patch(`${process.env.REACT_APP_API_BASE_URL}/api/tickets/claim/${ticket._id}`, {
+                helperId: 'dev-helper-004' // later make this dynamic
+            })
+            .then((res) => {
+                alert('Ticket claimed!');
+                window.location.reload(); // later switch to use state
+            })
+            .catch((err) => {
+                console.error('Claim error:', err.message);
+                alert('Failed to claim ticket');
+            });
+    };
+
     return (
         <div className="ticket-card">
             <h2>{ticket.title}</h2>
@@ -26,6 +42,10 @@ const TicketDetails = ({ ticket }) => {
                         Join Call
                     </a>
                 </p>
+            )}
+
+            {ticket.status === 'open' && (
+                <button onClick={handleClaim}>Claim Ticket</button>
             )}
         </div>
     );
