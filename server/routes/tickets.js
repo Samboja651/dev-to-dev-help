@@ -66,4 +66,51 @@ router.patch('/claim/:id', async (req, res) => {
     }
 });
 
+// PATCH: submit a solution document
+router.patch('/solution/:id', async (req, res) => {
+    try {
+        const { solutionDoc } = req.body;
+        const ticketId = req.params.id;
+
+        const updatedTicket = await Ticket.findByIdAndUpdate(
+            ticketId,
+            {
+                solutionDoc,
+                status: 'resolved',
+                'timestamps.resolved': new Date(),
+            },
+            { new: true }
+        );
+        if (!updatedTicket) {
+            return res.status(404).json({ error: 'Ticket not found' });
+        }
+        res.status(200).json(updatedTicket);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to submit solution', details: err.message });
+    }
+});
+
+// PATCH: add google meet link as solution
+router.patch('/meet/:id', async (req, res) => {
+    try {
+        const { meetLink } = req.body;
+        const ticketId = req.params.id;
+
+        const updatedTicket = await Ticket.findByIdAndUpdate(
+            ticketId,
+            {
+                meetLink,
+                status: 'claimed',
+            },
+            { new: true }
+        );
+        if (!updatedTicket) {
+            return res.status(404).json({error: 'Ticket not found'});
+        }
+        res.status(200).json(updatedTicket);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to add meet link', details: err.message });
+    }
+});
+
 module.exports = router
