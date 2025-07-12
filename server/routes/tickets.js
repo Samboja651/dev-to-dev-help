@@ -122,4 +122,15 @@ router.get('/claimed', async (req, res) => {
         res.status(500).json({ error: 'Failed to retrieve claimed tickets', details: err.message });
     }
 });
+
+// GET: fetch resolved tickets
+router.get('/resolved', async (req, res) => {
+    try {
+        const resolvedTickets = await Ticket.find({ status: 'resolved' }).sort({ 'timestamps.resolved': -1});
+        res.status(200).json(resolvedTickets);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to retrieve resolved tickets', details: err.message });
+    }
+});
+
 module.exports = router

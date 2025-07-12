@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 const TicketDetails = ({ ticket }) => {
     // state for markdown solution
     const [solutionInput, setSolutionInput] = useState('');
+    const [meetInput, setMeetInput] = useState('');
 
     // handle ticket claiming
     const handleClaim = () => {
@@ -37,6 +38,23 @@ const TicketDetails = ({ ticket }) => {
                 alert('Failed to submit solution');
             });
     };
+
+    // handle google meet links
+    const handleMeetSubmit = () => {
+        axios
+            .patch(`${process.env.REACT_APP_API_BASE_URL}/api/tickets/meet/${ticket._id}`, {
+                meetLink: meetInput,
+            })
+            .then(() => {
+                alert('Meet link submitted');
+                window.location.reload();
+            })
+            .catch((err) => {
+                console.error('Meet link error:', err.message);
+                alert('Failed to submit Meet link');
+            });
+    };
+
     // layout
     return (
         <div className="ticket-card">
@@ -71,7 +89,7 @@ const TicketDetails = ({ ticket }) => {
             {/* solution form visible only if ticket is claimed */}
             {ticket.status === 'claimed' && (
                 <div>
-                    <h3>Submit Solution (Markdown)</h3>
+                    <h3>Solution (Markdown)</h3>
                     <textarea 
                         value={solutionInput}
                         onChange={(e) => setSolutionInput(e.target.value)}
@@ -80,7 +98,21 @@ const TicketDetails = ({ ticket }) => {
                         placeholder="write markdown solution here"
                     />
                     <br />
-                    <button onClick={handleSolutionSubmit}>Submit Solution</button>
+                    <button onClick={handleSolutionSubmit}>Submit</button>
+                </div>
+            )}
+
+            {ticket.status === 'claimed' && (
+                <div>
+                    <h3>Google Meet Link</h3>
+                    <input 
+                    type="text"
+                    value={meetInput}
+                    onChange={(e) => setMeetInput(e.target.value)}
+                    placeholder="https://meet.google.com/your-code"
+                    />
+                    <br />
+                    <button onClick={handleMeetSubmit}>Submit</button>
                 </div>
             )}
 
