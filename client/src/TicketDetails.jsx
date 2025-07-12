@@ -1,8 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
 
 const TicketDetails = ({ ticket }) => {
+    // state for markdown solution
+    const [solutionInput, setSolutionInput] = useState('');
+
+    // handle ticket claiming
     const handleClaim = () => {
         axios
             .patch(`${process.env.REACT_APP_API_BASE_URL}/api/tickets/claim/${ticket._id}`, {
@@ -18,6 +22,22 @@ const TicketDetails = ({ ticket }) => {
             });
     };
 
+    // handle markdown solution submission
+    const handleSolutionSubmit = () => {
+        axios
+            .patch(`${process.env.REACT_APP_API_BASE_URL}/api/tickets/solution/${ticket._id}`, {
+                solutionDoc: solutionInput,
+            })
+            .then(() => {
+                alert('Solution submitted!');
+                window.location.reload();
+            })
+            .catch((err) => {
+                console.error('Submission error:', err.message);
+                alert('Failed to submit solution');
+            });
+    };
+    // layout
     return (
         <div className="ticket-card">
             <h2>{ticket.title}</h2>
@@ -44,9 +64,26 @@ const TicketDetails = ({ ticket }) => {
                 </p>
             )}
 
+            {/* claim btn visible only if ticket is open */}
             {ticket.status === 'open' && (
                 <button onClick={handleClaim}>Claim Ticket</button>
             )}
+            {/* solution form visible only if ticket is claimed */}
+            {ticket.status === 'claimed' && (
+                <div>
+                    <h3>Submit Solution (Markdown)</h3>
+                    <textarea 
+                        value={solutionInput}
+                        onChange={(e) => setSolutionInput(e.target.value)}
+                        rows={6}
+                        cols={50}
+                        placeholder="write markdown solution here"
+                    />
+                    <br />
+                    <button onClick={handleSolutionSubmit}>Submit Solution</button>
+                </div>
+            )}
+
         </div>
     );
 };

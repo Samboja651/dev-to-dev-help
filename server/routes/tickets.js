@@ -113,4 +113,13 @@ router.patch('/meet/:id', async (req, res) => {
     }
 });
 
+// GET: fetch claimed tickets
+router.get('/claimed', async (req, res) => {
+    try {
+        const claimedTickets = await Ticket.find({ status: 'claimed' }).sort({ 'timestamps.claimed': -1 });
+        res.status(200).json(claimedTickets);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to retrieve claimed tickets', details: err.message });
+    }
+});
 module.exports = router
