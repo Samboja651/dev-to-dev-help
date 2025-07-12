@@ -3,12 +3,12 @@ const mongoose = require('mongoose')
 const ticketSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true,
+        required: [true, 'Title is required'],
         trim: true,
     },
     description: {
         type: String,
-        required: true,
+        required: [true, 'Description is required'],
     },
     tags: {
         type: [String],
@@ -17,7 +17,7 @@ const ticketSchema = new mongoose.Schema({
     urgency: {
         type: String,
         enum: ['low', 'medium', 'high'],
-        default: 'medium',
+        required: true,
     },
     status: {
         type: String,
@@ -30,23 +30,29 @@ const ticketSchema = new mongoose.Schema({
     },
     claimedBy: {
         type: String,
-        default: null,
-    },
-    solutionDoc: {
-        type: String,
-        default: '', // markdown content
-    },
-    meetLink: {
-        type: String,
-        default: '',
-    },
-    timestamps: {
-        created: {
-            type: Date,
-            default: Date.now,
+        solutionDoc: String,
+        meetLink: String,
+        timestamps: {
+            created: Date,
+            claimed: Date,
+            resolved: Date,
         },
-        claimed: Date,
-        resolved: Date,
     },
+    // solutionDoc: {
+    //     type: String,
+    //     default: '', // markdown content
+    // },
+    // meetLink: {
+    //     type: String,
+    //     default: '',
+    // },
+    // timestamps: {
+    //     created: {
+    //         type: Date,
+    //         default: Date.now,
+    //     },
+    //     claimed: Date,
+    //     resolved: Date,
+    // },
 });
 module.exports = mongoose.model('Ticket', ticketSchema);

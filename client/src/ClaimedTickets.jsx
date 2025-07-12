@@ -8,7 +8,7 @@ const ClaimedTickets = () => {
     useEffect(() => {
         axios
             .get(`${process.env.REACT_APP_API_BASE_URL}/api/tickets/claimed`)
-            .then((res) => setTickets(res.data))
+            .then((res) => setTickets(res.data.data))
             .catch((err) => {
                 console.error('Error fetching claimed tickets:', err.message);
             });

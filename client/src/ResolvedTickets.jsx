@@ -8,7 +8,7 @@ const ResolvedTickets = () => {
     useEffect(() => {
         axios
             .get(`${process.env.REACT_APP_API_BASE_URL}/api/tickets/resolved`)
-            .then((res) => setTickets(res.data))
+            .then((res) => setTickets(res.data.data))
             .catch((err) => {
                 console.error('Error fetching resolved tickets:', err.message);
             });

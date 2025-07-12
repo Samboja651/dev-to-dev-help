@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const morgan = require('morgan');
 
 dotenv.config();
 
@@ -10,7 +11,7 @@ const cors = require('cors');
 const app = express();
 
 // middlewares
-app.use(express.json(), cors());
+app.use(express.json(), cors(), morgan('dev'));
 
 // routes
 app.use('/api/tickets', ticketRoutes);
