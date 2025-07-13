@@ -6,6 +6,9 @@ const TicketDetails = ({ ticket }) => {
     // state for markdown solution
     const [solutionInput, setSolutionInput] = useState('');
     const [meetInput, setMeetInput] = useState('');
+    const [alertMsg, setAlertMsg] = useState('');
+    const [alertType, setAlertType] = useState('');
+
 
     // handle ticket claiming
     const handleClaim = () => {
@@ -14,12 +17,13 @@ const TicketDetails = ({ ticket }) => {
                 helperId: 'dev-helper-004' // later make this dynamic
             })
             .then((res) => {
-                alert('Ticket claimed!');
-                window.location.reload(); // later switch to use state
+                setAlertMsg('✅ Ticket claimed!');
+                setAlertType('success');
             })
             .catch((err) => {
                 console.error('Claim error:', err.message);
-                alert('Failed to claim ticket');
+                setAlertMsg('❌ Failed to claim ticket');
+                setAlertType('danger');
             });
     };
 
@@ -30,12 +34,13 @@ const TicketDetails = ({ ticket }) => {
                 solutionDoc: solutionInput,
             })
             .then(() => {
-                alert('Solution submitted!');
-                window.location.reload();
+                setAlertMsg('✅ Solution submitted!');
+                setAlertType('success');
             })
             .catch((err) => {
                 console.error('Submission error:', err.message);
-                alert('Failed to submit solution');
+                setAlertMsg('❌ Failed to submit solution');
+                setAlertType('danger');
             });
     };
 
@@ -46,18 +51,25 @@ const TicketDetails = ({ ticket }) => {
                 meetLink: meetInput,
             })
             .then(() => {
-                alert('Meet link submitted');
-                window.location.reload();
+                setAlertMsg('✅ Meet link submitted');
+                setAlertType('success');
             })
             .catch((err) => {
                 console.error('Meet link error:', err.message);
-                alert('Failed to submit Meet link');
+                setAlertMsg('❌ Failed to submit Meet link');
+                setAlertType('danger');
             });
     };
 
     // layout
     return (
         <div className="card mb-4">
+            {alertMsg && (
+                <div className={`alert alert-${alertType} mx-3`} role="alert">
+                    {alertMsg}
+                </div>
+            )}
+
             <div className="card-body">
                 <h5 className="card-title">{ticket.title}</h5>
                 <p className="card-text"><strong>Description:</strong> {ticket.description}</p>

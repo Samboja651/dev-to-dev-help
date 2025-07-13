@@ -3,17 +3,18 @@ import axios from 'axios';
 import TicketDetails from "./TicketDetails";
 
 const OpenTickets = () => {
-    const [tickets, setTickets, searchTerm, setSearchTerm] = useState([]);
+    const [tickets, setTickets] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         axios
             .get(`${process.env.REACT_APP_API_BASE_URL}/api/tickets/open`)
             .then((res) => setTickets(res.data.data))
             .catch((err) => console.error('Error fetching tickets:', err.message));
-    });
+    }, []);
 
-    const filteredTickets = tickets.filter(t => 
-        t.title.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredTickets = tickets.filter(t =>
+        (t.title?.toLowerCase() || '').includes((searchTerm || '').toLowerCase())
     );
     return (
         <div className="container mt-4">
