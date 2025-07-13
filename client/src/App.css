@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+.nav-tabs .nav-link {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.nav-tabs .nav-link:hover {
+  background-color: #f0f0f0;
+  color: #0d6efd;
+  cursor: pointer;
+}
