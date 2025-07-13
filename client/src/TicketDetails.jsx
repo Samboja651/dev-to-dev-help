@@ -57,66 +57,71 @@ const TicketDetails = ({ ticket }) => {
 
     // layout
     return (
-        <div className="ticket-card">
-            <h2>{ticket.title}</h2>
-            <p><strong>Description:</strong> {ticket.description}</p>
-            <p><strong>Tags:</strong> {ticket.tags.join(', ')}</p>
-            <p><strong>Urgency:</strong> {ticket.urgency}</p>
-            <p><strong>Status:</strong> {ticket.status}</p>
+        <div className="card mb-4">
+            <div className="card-body">
+                <h5 className="card-title">{ticket.title}</h5>
+                <p className="card-text"><strong>Description:</strong> {ticket.description}</p>
+                <p><strong>Tags:</strong> {ticket.tags.join(', ')}</p>
 
-            {ticket.claimedBy && <p><strong>Claimed By:</strong> {ticket.claimedBy}</p>}
+                <span className={`badge bg-${ticket.urgency === 'high' ? 'danger' : ticket.urgency === 'medium' ? 'warning' : 'secondary'} me-2`}>
+                {ticket.urgency}
+                </span>
+                <span className={`badge bg-${ticket.status === 'resolved' ? 'success' : ticket.status === 'claimed' ? 'info' : 'primary'}`}>
+                {ticket.status}
+                </span>
 
-            {ticket.solutionDoc && (
-                <div className="solution-doc">
-                    <h3>Solution:</h3>
+                {ticket.claimedBy && <p><strong>Claimed By:</strong> {ticket.claimedBy}</p>}
+
+                {ticket.solutionDoc && (
+                <div className="mt-3">
+                    <h6>Solution</h6>
                     <ReactMarkdown>{ticket.solutionDoc}</ReactMarkdown>
                 </div>
-            )}
+                )}
 
-            {ticket.meetLink && (
-                <p>
+                {ticket.meetLink && (
+                <p className="mt-2">
                     <strong>Google Meet:</strong>{' '}
                     <a href={ticket.meetLink} target="_blank" rel="noopener noreferrer">
-                        Join Call
+                    Join Call
                     </a>
                 </p>
-            )}
+                )}
 
-            {/* claim btn visible only if ticket is open */}
-            {ticket.status === 'open' && (
-                <button onClick={handleClaim}>Claim Ticket</button>
-            )}
-            {/* solution form visible only if ticket is claimed */}
-            {ticket.status === 'claimed' && (
-                <div>
-                    <h3>Solution (Markdown)</h3>
-                    <textarea 
+                {ticket.status === 'open' && (
+                <button className="btn btn-primary mt-3" onClick={handleClaim}>Claim Ticket</button>
+                )}
+
+                {ticket.status === 'claimed' && (
+                <>
+                    <div className="mt-4">
+                    <h6>Solution (Markdown)</h6>
+                    <textarea
+                        className="form-control"
                         value={solutionInput}
                         onChange={(e) => setSolutionInput(e.target.value)}
                         rows={6}
-                        cols={50}
-                        placeholder="write markdown solution here"
+                        placeholder="Write markdown solution here"
                     />
-                    <br />
-                    <button onClick={handleSolutionSubmit}>Submit</button>
-                </div>
-            )}
+                    <button className="btn btn-secondary mt-2" onClick={handleSolutionSubmit}>Submit</button>
+                    </div>
 
-            {ticket.status === 'claimed' && (
-                <div>
-                    <h3>Google Meet Link</h3>
-                    <input 
-                    type="text"
-                    value={meetInput}
-                    onChange={(e) => setMeetInput(e.target.value)}
-                    placeholder="https://meet.google.com/your-code"
+                    <div className="mt-4">
+                    <h6>Google Meet Link</h6>
+                    <input
+                        type="url"
+                        className="form-control"
+                        value={meetInput}
+                        onChange={(e) => setMeetInput(e.target.value)}
+                        placeholder="https://meet.google.com/your-code"
                     />
-                    <br />
-                    <button onClick={handleMeetSubmit}>Submit</button>
-                </div>
-            )}
-
+                    <button className="btn btn-outline-primary mt-2" onClick={handleMeetSubmit}>Submit</button>
+                    </div>
+                </>
+                )}
+            </div>
         </div>
+
     );
 };
 export default TicketDetails;
