@@ -3,26 +3,29 @@ import axios from 'axios';
 import TicketDetails from './TicketDetails';
 
 const ClaimedTickets = () => {
-    const [tickets, setTickets] = useState([]);
-
-    useEffect(() => {
-        axios
-            .get(`${process.env.REACT_APP_API_BASE_URL}/api/tickets/claimed`)
-            .then((res) => setTickets(res.data.data))
-            .catch((err) => {
-                console.error('Error fetching claimed tickets:', err.message);
-            });
-    }, []);
+  const [tickets, setTickets] = useState([]);
+  useEffect(() => {
+      axios
+          .get(`${process.env.REACT_APP_API_BASE_URL}/api/tickets/claimed`)
+          .then((res) => setTickets(res.data.data))
+          .catch((err) => {
+              console.error('Error fetching claimed tickets:', err.message);
+          });
+  }, []);
 
   return (
-    <div>
+    <div className="container mt-4">
       <h1>Claimed Tickets</h1>
       {tickets.length === 0 ? (
-        <p>No claimed tickets at the moment.</p>
+        <p>No claimed tickets.</p>
       ) : (
-        tickets.map((ticket) => (
-          <TicketDetails key={ticket._id} ticket={ticket} />
-        ))
+        <div className="row">
+          {tickets.map((ticket) => (
+            <div className="col-md-6 col-lg-4 mb-4" key={ticket._id}>
+              <TicketDetails ticket={ticket} />
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

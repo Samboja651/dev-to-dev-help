@@ -15,16 +15,20 @@ const ResolvedTickets = () => {
     }, []);
 
     return (
-        <div>
-            <h1>Resolved Tickets</h1>
-            {tickets.length === 0 ? (
-                <p>No resolved tickets yet.</p>
-            ) : (
-                tickets.map((ticket) => (
-                    <TicketDetails key={ticket._id} ticket={ticket} />
-                ))
-            )}
+    <div className="container mt-4">
+        <h1>Resolved Tickets</h1>
+        {tickets.length === 0 ? (
+        <p>No resolved tickets.</p>
+        ) : (
+        <div className="row">
+            {tickets.map((ticket) => (
+            <div className="col-md-6 col-lg-4 mb-4" key={ticket._id}>
+                <TicketDetails ticket={ticket} />
+            </div>
+            ))}
         </div>
+        )}
+    </div>
     );
 };
 export default ResolvedTickets;

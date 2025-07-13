@@ -13,16 +13,20 @@ const OpenTickets = () => {
     }, []);
 
     return (
-        <div>
-            <h1>Open Tickets</h1>
-            {tickets.length === 0 ? (
-                <p>No open tickets yet.</p>
-            ) : (
-                tickets.map((ticket) => (
-                    <TicketDetails key={ticket._id} ticket={ticket} />
-                ))
-            )}
+    <div className="container mt-4">
+        <h1>Open Tickets</h1>
+        {tickets.length === 0 ? (
+        <p>No open tickets yet.</p>
+        ) : (
+        <div className="row">
+            {tickets.map((ticket) => (
+            <div className="col-md-6 col-lg-4 mb-4" key={ticket._id}>
+                <TicketDetails ticket={ticket} />
+            </div>
+            ))}
         </div>
+        )}
+    </div>
     );
 };
 export default OpenTickets;
