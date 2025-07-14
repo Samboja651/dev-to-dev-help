@@ -2,12 +2,11 @@ import React, {useState} from "react";
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
 
-const TicketDetails = ({ ticket }) => {
+const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
     // state for markdown solution
     const [solutionInput, setSolutionInput] = useState('');
     const [meetInput, setMeetInput] = useState('');
-    const [alertMsg, setAlertMsg] = useState('');
-    const [alertType, setAlertType] = useState('');
+
 
 
     // handle ticket claiming
@@ -17,13 +16,10 @@ const TicketDetails = ({ ticket }) => {
                 helperId: 'dev-helper-004' // later make this dynamic
             })
             .then((res) => {
-                setAlertMsg('✅ Ticket claimed!');
-                setAlertType('success');
+                onClaimSuccess(ticket._id); // removes ticket immediately                  
             })
             .catch((err) => {
                 console.error('Claim error:', err.message);
-                setAlertMsg('❌ Failed to claim ticket');
-                setAlertType('danger');
             });
     };
 
@@ -32,15 +28,16 @@ const TicketDetails = ({ ticket }) => {
         axios
             .patch(`${process.env.REACT_APP_API_BASE_URL}/api/tickets/solution/${ticket._id}`, {
                 solutionDoc: solutionInput,
+                status: 'resolved'
             })
-            .then(() => {
-                setAlertMsg('✅ Solution submitted!');
-                setAlertType('success');
+            .then((res) => {
+                console.log('Patch res:', res.data);
+                onRemove(ticket._id);
+                onFeedback('✅ Solution submitted!');
             })
             .catch((err) => {
                 console.error('Submission error:', err.message);
-                setAlertMsg('❌ Failed to submit solution');
-                setAlertType('danger');
+                onFeedback('❌ Failed to submit solution');
             });
     };
 
@@ -51,27 +48,22 @@ const TicketDetails = ({ ticket }) => {
                 meetLink: meetInput,
             })
             .then(() => {
-                setAlertMsg('✅ Meet link submitted');
-                setAlertType('success');
+                onRemove(ticket._id);
+                onFeedback('✅ Meet link submitted!');
             })
             .catch((err) => {
                 console.error('Meet link error:', err.message);
-                setAlertMsg('❌ Failed to submit Meet link');
-                setAlertType('danger');
+                onFeedback('❌ Failed to submit Meet link');
+
             });
     };
 
     // layout
     return (
         <div className="card mb-4">
-            {alertMsg && (
-                <div className={`alert alert-${alertType} mx-3`} role="alert">
-                    {alertMsg}
-                </div>
-            )}
-
             <div className="card-body">
                 <h5 className="card-title">{ticket.title}</h5>
+                <pre>{JSON.stringify(ticket, null, 2)}</pre>
                 <p className="card-text"><strong>Description:</strong> {ticket.description}</p>
                 <p><strong>Tags:</strong> {ticket.tags.join(', ')}</p>
 

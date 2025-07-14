@@ -5,6 +5,21 @@ import TicketDetails from "./TicketDetails";
 const OpenTickets = () => {
     const [tickets, setTickets] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [alertMsg, setAlertMsg] = useState('');
+    const [alertType, setAlertType] = useState('');
+
+    const handleClaimSuccess = (claimedId) => {
+        // remove claimed ticket from list
+        setTickets(prev => prev.filter(t => t._id !== claimedId));
+
+        setAlertMsg('✅ Ticket claimed!');
+        setAlertType('success');
+
+        setTimeout(() => {
+            setAlertMsg('');
+            setAlertType('');
+        }, 5000); // keep alert visible for 5 seconds
+    };
 
     useEffect(() => {
         axios
@@ -27,6 +42,13 @@ const OpenTickets = () => {
             />
 
             <h1>Open Tickets</h1>
+
+            {alertMsg && (
+            <div className={`alert alert-${alertType} toast-timer`} role="alert">
+                {alertMsg}
+            </div>
+            )}
+
             {filteredTickets.length === 0 ? (
                 <div className="alert alert-info">No matching tickets found.</div>
 
@@ -36,7 +58,11 @@ const OpenTickets = () => {
             <div className="row">
                 {filteredTickets.map((ticket) => (
                 <div className="col-md-6 col-lg-4 mb-4" key={ticket._id}>
-                    <TicketDetails ticket={ticket} />
+                    <TicketDetails 
+                        key={ticket._id}
+                        ticket={ticket}
+                        onClaimSuccess={handleClaimSuccess} 
+                    />
                 </div>
                 ))}
             </div>

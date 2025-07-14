@@ -45,3 +45,27 @@
   color: #0d6efd;
   cursor: pointer;
 }
+
+/* notification progress-style animation  */
+.toast-timer {
+  position: relative;
+  overflow: hidden;
+}
+.toast-timer::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background-color: #0d6efd;
+  animation: depleteBar 5s linear forwards;
+  width: 100%;
+}
+@keyframes depleteBar {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}

@@ -56,6 +56,39 @@ exports.submitDocSolution = async (req, res) => {
     }
 };
 
+exports.submitMeetSolution = async (req, res) => {
+    try {
+        const { meetLink } = req.body;
+        const ticketId = req.params.id;
+
+        const updatedTicket = await Ticket.findByIdAndUpdate(
+            ticketId,
+            {
+                meetLink,
+                status: 'resolved'
+            },
+            { new: true }
+        );
+        if (!updatedTicket) {
+            return res.status(404).json({
+            success: false,
+            message: 'Ticket not found',
+            error: err.message
+            });
+        }
+        res.status(200).json({
+            success: true,
+            message: 'Ticket updated successfully',
+            data: updatedTicket
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: 'Failed to meet link',
+            error: err.message
+        });
+    }
+};
 // create a ticket
 exports.createTicket = async (req, res) => {
     try {
@@ -130,39 +163,6 @@ exports.claimTicket = async (req, res) => {
     }
 };
 
-exports.submitMeetSolution = async (req, res) => {
-    try {
-        const { meetLink } = req.body;
-        const ticketId = req.params.id;
-
-        const updatedTicket = await Ticket.findByIdAndUpdate(
-            ticketId,
-            {
-                meetLink,
-                status: 'claimed',
-            },
-            { new: true }
-        );
-        if (!updatedTicket) {
-            return res.status(404).json({
-            success: false,
-            message: 'Ticket not found',
-            error: err.message
-            });
-        }
-        res.status(200).json({
-            success: true,
-            message: 'Ticket updated successfully',
-            data: updatedTicket
-        });
-    } catch (err) {
-        res.status(500).json({
-            success: false,
-            message: 'Failed to meet link',
-            error: err.message
-        });
-    }
-};
 
 // claimed tickets
 exports.claimedTickets = async (req, res) => {
