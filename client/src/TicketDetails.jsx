@@ -77,10 +77,15 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
 
                 {ticket.claimedBy && <p><strong>Claimed By:</strong> {ticket.claimedBy}</p>}
 
-                {ticket.solutionDoc && (
+                {ticket.solutionDoc?.trim() && (
                 <div className="mt-3">
                     <h6>Solution</h6>
                     <ReactMarkdown>{ticket.solutionDoc}</ReactMarkdown>
+                    {ticket.timestamps?.resolved && (
+                        <p className="text-muted mt-2" style={{ fontSize: '0.85rem' }}>
+                            {new Date(ticket.timestamps.resolved).toLocaleDateString()}
+                        </p>
+                    )}
                 </div>
                 )}
 

@@ -29,9 +29,11 @@ exports.submitDocSolution = async (req, res) => {
         const updatedTicket = await Ticket.findByIdAndUpdate(
             ticketId,
             {
-                solutionDoc,
-                status: 'resolved',
-                'timestamps.resolved': new Date(),
+                $set: {
+                    solutionDoc,
+                    status: 'resolved',
+                    'timestamps.resolved': new Date()
+                }
             },
             { new: true }
         );
