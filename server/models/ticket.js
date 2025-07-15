@@ -30,29 +30,23 @@ const ticketSchema = new mongoose.Schema({
     },
     claimedBy: {
         type: String,
-        solutionDoc: String,
-        meetLink: String,
-        timestamps: {
-            created: Date,
-            claimed: Date,
-            resolved: Date,
-        },
+        default: null,
     },
-    // solutionDoc: {
-    //     type: String,
-    //     default: '', // markdown content
-    // },
-    // meetLink: {
-    //     type: String,
-    //     default: '',
-    // },
-    // timestamps: {
-    //     created: {
-    //         type: Date,
-    //         default: Date.now,
-    //     },
-    //     claimed: Date,
-    //     resolved: Date,
-    // },
+    solutionDoc: {
+        type: String,
+        default: '', // markdown content
+    },
+    meetLink: {
+        type: String,
+        default: '',
+    },
+    timestamps: {
+        created: {
+            type: Date,
+            default: Date.now,
+        },
+        claimed: Date,
+        resolved: Date,
+    },
 });
 module.exports = mongoose.model('Ticket', ticketSchema);

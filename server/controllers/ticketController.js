@@ -25,7 +25,7 @@ exports.submitDocSolution = async (req, res) => {
     try {
         const { solutionDoc } = req.body;
         const ticketId = req.params.id;
-
+        console.log('Received solutiondoc:', solutionDoc);
         const updatedTicket = await Ticket.findByIdAndUpdate(
             ticketId,
             {

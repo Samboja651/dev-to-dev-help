@@ -63,7 +63,6 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
         <div className="card mb-4">
             <div className="card-body">
                 <h5 className="card-title">{ticket.title}</h5>
-                <pre>{JSON.stringify(ticket, null, 2)}</pre>
                 <p className="card-text"><strong>Description:</strong> {ticket.description}</p>
                 <p><strong>Tags:</strong> {ticket.tags.join(', ')}</p>
 
