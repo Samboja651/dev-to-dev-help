@@ -33,20 +33,20 @@ const OpenTickets = () => {
     );
     return (
         <div className="container mt-4">
+            <h1 className="mb-4">Open Tickets</h1>
+
             {/* search input */}
-            <input type="text" 
-                className="form-control mb-3"
+            <input type="text"
+                className="form-control mb-4"
                 placeholder="Search by title"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
 
-            <h1>Open Tickets</h1>
-
             {alertMsg && (
-            <div className={`alert alert-${alertType} toast-timer`} role="alert">
-                {alertMsg}
-            </div>
+                <div className={`alert alert-${alertType} toast-timer`} role="alert">
+                    {alertMsg}
+                </div>
             )}
 
             {filteredTickets.length === 0 ? (
@@ -54,18 +54,20 @@ const OpenTickets = () => {
 
             ) : (
 
-            // tickets in grid layout
-            <div className="row">
-                {filteredTickets.map((ticket) => (
-                <div className="col-md-6 col-lg-4 mb-4" key={ticket._id}>
-                    <TicketDetails 
-                        key={ticket._id}
-                        ticket={ticket}
-                        onClaimSuccess={handleClaimSuccess} 
-                    />
+                // tickets in grid layout
+                <div className="row">
+                    {filteredTickets.map((ticket) => (
+                        <div className="col-md-6 col-lg-4 mb-4 d-flex" key={ticket._id}>
+                            <div className="w-100 h-100">
+                                <TicketDetails
+                                    key={ticket._id}
+                                    ticket={ticket}
+                                    onClaimSuccess={handleClaimSuccess}
+                                />
+                            </div>
+                        </div>
+                    ))}
                 </div>
-                ))}
-            </div>
             )}
         </div>
     );

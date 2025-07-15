@@ -60,18 +60,20 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
 
     // layout
     return (
-        <div className="card mb-4">
-            <div className="card-body">
+        <div className="card mb-4 h-100 d-flex flex-column">
+            <div className="card-body d-flex flex-column">
                 <h5 className="card-title">{ticket.title}</h5>
                 <p className="card-text"><strong>Description:</strong> {ticket.description}</p>
-                <p><strong>Tags:</strong> {ticket.tags.join(', ')}</p>
+                <div className="d-flex justify-content-start align-items-center gap-2 flex-wrap mb-3">
+                    <span className={`badge bg-${ticket.urgency === 'high' ? 'danger' : ticket.urgency === 'medium' ? 'warning' : 'secondary'}`}>
+                        {ticket.urgency}
+                    </span>
+                    <span className={`badge bg-${ticket.status === 'resolved' ? 'success' : ticket.status === 'claimed' ? 'info' : 'primary'}`}>
+                        {ticket.status}
+                    </span>
+                </div>
 
-                <span className={`badge bg-${ticket.urgency === 'high' ? 'danger' : ticket.urgency === 'medium' ? 'warning' : 'secondary'} me-2`}>
-                {ticket.urgency}
-                </span>
-                <span className={`badge bg-${ticket.status === 'resolved' ? 'success' : ticket.status === 'claimed' ? 'info' : 'primary'}`}>
-                {ticket.status}
-                </span>
+                <p><strong>Tags:</strong> {ticket.tags.join(', ')}</p>
 
                 {ticket.claimedBy && <p><strong>Claimed By:</strong> {ticket.claimedBy}</p>}
 
@@ -91,9 +93,6 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
                 </p>
                 )}
 
-                {ticket.status === 'open' && (
-                <button className="btn btn-primary mt-3" onClick={handleClaim}>Claim Ticket</button>
-                )}
 
                 {ticket.status === 'claimed' && (
                 <>
@@ -122,6 +121,14 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
                     </div>
                 </>
                 )}
+                {ticket.status === 'open' && (
+                    <div className="mt-auto d-flex justify-content-end">
+                        <button className="btn btn-outline-primary btn-sm" onClick={handleClaim}>
+                            Claim Ticket
+                        </button>
+                    </div>
+                )}
+
             </div>
         </div>
 
