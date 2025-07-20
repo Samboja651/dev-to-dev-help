@@ -102,6 +102,7 @@ exports.createTicket = async (req, res) => {
             createdBy,
         } = req.body;
 
+        console.log('incoming ticket data:', req.body)
         const newTicket = new Ticket({
             title,
             description,
