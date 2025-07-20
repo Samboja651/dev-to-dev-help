@@ -7,7 +7,11 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
     const [solutionInput, setSolutionInput] = useState('');
     const [meetInput, setMeetInput] = useState('');
 
-
+    const isValidMeetLink = (url) => {
+        const meetRegex = /^https:\/\/meet\.google\.com\/[a-zA-Z0-9\-]+$/;
+        return meetRegex.test(url.trim())
+    }
+    const isSubmissionReady = solutionInput.trim() !== '' || meetInput.trim() !== '';
 
     // handle ticket claiming
     const handleClaim = () => {
@@ -56,6 +60,32 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
                 onFeedback('❌ Failed to submit Meet link');
 
             });
+    };
+
+    // validation
+    const handleUnifiedSubmit = () => {
+        const trimmedDoc = solutionInput.trim();
+        const trimmedMeet = meetInput.trim();
+        
+        const hasDoc = trimmedDoc !== '';
+        const hasMeet = trimmedMeet !== '';
+        const meetIsValid = isValidMeetLink(trimmedMeet);
+
+        // if meet link isinvalid but present, block everything
+        if (hasMeet && !meetIsValid) {
+            onFeedback('❌ Invalid Meet link. Please enter a valid Google Meet URL.');
+            return;
+        }
+
+        // proceeds if link is present and valid
+        if (hasMeet && meetIsValid) {
+            handleMeetSubmit();
+        }
+
+        // procced with markdowon if present
+        if (hasDoc) {
+            handleSolutionSubmit();
+        }
     };
 
     // layout
@@ -110,10 +140,6 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
                         rows={6}
                         placeholder="Write markdown solution here"
                     />
-                    <button className="btn btn-secondary mt-2" onClick={handleSolutionSubmit}>Submit</button>
-                    </div>
-
-                    <div className="mt-4">
                     <h6>Google Meet Link</h6>
                     <input
                         type="url"
@@ -121,9 +147,17 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
                         value={meetInput}
                         onChange={(e) => setMeetInput(e.target.value)}
                         placeholder="https://meet.google.com/your-code"
+                        title="optional"
                     />
-                    <button className="btn btn-outline-primary mt-2" onClick={handleMeetSubmit}>Submit</button>
+                    <button 
+                        className={`btn btn-secondary mt-2 ${!isSubmissionReady ? 'disabled opacity-50' : ''}`}
+                        onClick={handleUnifiedSubmit}
+                        disabled={!isSubmissionReady}
+                    >
+                        Submit
+                    </button>
                     </div>
+
                 </>
                 )}
                 {ticket.status === 'open' && (
