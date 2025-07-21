@@ -8,7 +8,8 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
     const [meetInput, setMeetInput] = useState('');
 
     const isValidMeetLink = (url) => {
-        const meetRegex = /^https:\/\/meet\.google\.com\/[a-zA-Z0-9\-]+$/;
+        
+        const meetRegex = /^https:\/\/meet\.google\.com\/[a-zA-Z0-9-]+$/;
         return meetRegex.test(url.trim())
     }
     const isSubmissionReady = solutionInput.trim() !== '' || meetInput.trim() !== '';
