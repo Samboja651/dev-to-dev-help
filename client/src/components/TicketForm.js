@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContexts";
+
 
 export default function TicketForm() {
     const API_BASE = process.env.REACT_APP_API_BASE_URL;
+    const { user } = useContext(AuthContext);
 
     const [formData, setFormData] = useState({
         title: '',
@@ -35,7 +39,7 @@ export default function TicketForm() {
         const payload = {
             ...formData,
             tags: formData.tags.split(',').map(tag => tag.trim()),
-            createdBy: 'demo-user', // pass the auth user
+            createdBy: user?._id
         };
 
         setIsSubmitting(true);
