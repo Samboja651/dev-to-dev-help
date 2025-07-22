@@ -2,11 +2,13 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../contexts/AuthContexts';
 import { useNavigate } from "react-router-dom";
+import { ToastContext } from '../contexts/ToastContext';
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useContext(AuthContext);
+  const { showToast } = useContext(ToastContext);
 
   const navigate = useNavigate();
 
@@ -18,9 +20,11 @@ export default function RegisterPage() {
         password,
       });
       login(res.data.user, res.data.token); // auto login after registration
+      // show feedback
+      showToast("Its a pressure to meet you");
       navigate("/");
     } catch (err) {
-      alert('Registration failed');
+      showToast(err.response?.data?.message, "danger");
     }
   };
 

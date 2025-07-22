@@ -2,12 +2,15 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../contexts/AuthContexts';
 import { useNavigate } from "react-router-dom";
+import { ToastContext } from '../contexts/ToastContext';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
+    //show cool feedback messages
+    const { showToast } = useContext(ToastContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,10 +20,11 @@ export default function LoginPage() {
                 password,
             });
             login(res.data.user, res.data.token);
+            showToast("Great to see you again")
             //redirect to dashboard
             navigate("/");
         } catch (err) {
-            alert('Login failed')
+            showToast("Login failed: " + err.response?.data?.message, "danger");
         }
     };
     return (

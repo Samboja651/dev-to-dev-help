@@ -12,7 +12,7 @@ exports.register = async (req, res) => {
         res.json({ token: generateToken(user), user});
     } catch (err) {
         console.error("Registration error:", err.message);
-        res.status(400).json({ message: 'Registration failed' });
+        res.status(400).json({ message: 'Registration failed, email exists.' });
     }
 };
 
