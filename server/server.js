@@ -15,7 +15,9 @@ const app = express();
 app.use(express.json(), cors(), morgan('dev'));
 
 // routes
-app.use('/api/tickets', ticketRoutes, '/api/auth', authRoutes);
+app.use('/api/tickets', ticketRoutes);
+app.use('/api/auth', authRoutes);
++
 
 // db connection
 mongoose
