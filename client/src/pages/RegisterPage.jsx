@@ -1,11 +1,14 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../contexts/AuthContexts';
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,21 +18,59 @@ export default function RegisterPage() {
         password,
       });
       login(res.data.user, res.data.token); // auto login after registration
+      navigate("/");
     } catch (err) {
       alert('Registration failed');
     }
   };
 
   return (
-    <div className="card p-4 mx-auto" style={{ maxWidth: '400px' }}>
-      <h5 className="mb-3">Register</h5>
-      <form onSubmit={handleSubmit}>
-        <input type="email" className="form-control mb-3" placeholder="Email"
-          value={email} onChange={e => setEmail(e.target.value)} required />
-        <input type="password" className="form-control mb-3" placeholder="Password"
-          value={password} onChange={e => setPassword(e.target.value)} required />
-        <button type="submit" className="btn btn-success w-100">Create Account</button>
-      </form>
+    <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+        <div className="card p-4 shadow" style={{ width: '100%', maxWidth: '400px' }}>
+            <h5 className="mb-4 text-center">Create an Account</h5>
+
+            <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                    <label className="form-label">Email</label>
+                    <div className="input-group">
+                        <span className="input-group-text">
+                            <i className="bi bi-envelope"></i>
+                        </span>
+                        <input
+                            type="email"
+                            className="form-control"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                </div>
+
+                <div className="mb-4">
+                    <label className="form-label">Password</label>
+                    <div className="input-group">
+                        <span className="input-group-text">
+                            <i className="bi bi-lock"></i>
+                        </span>
+                        <input
+                            type="password"
+                            className="form-control"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                </div>
+
+                <button className="btn btn-primary w-100">Register</button>
+            </form>
+            <div className="text-center mt-3">
+                <span>Have an account? </span>
+                <a href="/login">Login</a>
+            </div>
+
+        </div>
     </div>
+
   );
 }

@@ -5,14 +5,16 @@ const morgan = require('morgan');
 const authRoutes = require('./routes/authRoutes');
 
 dotenv.config();
-
+process.env.JWT_SECRET
+console.log("secret is", process.env.JWT_SECRET);
 const ticketRoutes = require ('./routes/tickets');
 const cors = require('cors');
 
 const app = express();
 
 // middlewares
-app.use(express.json(), cors(), morgan('dev'));
+app.use(cors(), morgan('dev'));
+app.use(express.json());
 
 // routes
 app.use('/api/tickets', ticketRoutes);
