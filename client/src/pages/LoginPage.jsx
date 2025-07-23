@@ -4,6 +4,7 @@ import { AuthContext } from '../contexts/AuthContexts';
 import { useNavigate } from "react-router-dom";
 import { ToastContext } from '../contexts/ToastContext';
 import { Link } from 'react-router-dom';
+import Loader from '../components/Loader';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -12,9 +13,12 @@ export default function LoginPage() {
     const navigate = useNavigate();
     //show cool feedback messages
     const { showToast } = useContext(ToastContext);
+    //show loading
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/auth/login`, {
                 email,
@@ -26,48 +30,51 @@ export default function LoginPage() {
             navigate("/");
         } catch (err) {
             showToast("Login failed: " + err.response?.data?.message, "danger");
+        } finally {
+            setLoading(false);
         }
     };
     return (
         <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
             <div className="card p-4 shadow" style={{ width: '100%', maxWidth: '400px' }}>
                 <h5 className="mb-4 text-center">Login</h5>
-
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label className="form-label">Email</label>
-                        <div className="input-group">
-                            <span className="input-group-text">
-                                <i className="bi bi-envelope"></i>
-                            </span>
-                            <input
-                                type="email"
-                                className="form-control"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
+                {loading ? <Loader message='Authentication ...' /> : (
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                            <label className="form-label">Email</label>
+                            <div className="input-group">
+                                <span className="input-group-text">
+                                    <i className="bi bi-envelope"></i>
+                                </span>
+                                <input
+                                    type="email"
+                                    className="form-control"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="mb-4">
-                        <label className="form-label">Password</label>
-                        <div className="input-group">
-                            <span className="input-group-text">
-                                <i className="bi bi-lock"></i>
-                            </span>
-                            <input
-                                type="password"
-                                className="form-control"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
+                        <div className="mb-4">
+                            <label className="form-label">Password</label>
+                            <div className="input-group">
+                                <span className="input-group-text">
+                                    <i className="bi bi-lock"></i>
+                                </span>
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                            </div>
                         </div>
-                    </div>
 
-                    <button className="btn btn-primary w-100">Login</button>
-                </form>
+                        <button className="btn btn-primary w-100">Login</button>
+                    </form>
+                )}
                 <div className="text-center mt-3">
                     <span>New here? </span>
                     <Link to="/register">Create an account</Link>

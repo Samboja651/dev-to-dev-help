@@ -7,7 +7,6 @@ import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContexts";
 import { useNavigate } from "react-router-dom";
 
-
 export default function DashboardPage() {
     const [activeTab, setActiveTab] = useState("open");
     const { user, logout } = useContext(AuthContext);
@@ -31,7 +30,7 @@ export default function DashboardPage() {
                     </button>
                 )}
             </div>
-
+            
             <ul className="nav nav-tabs mb-3">
               <li className="nav-item">
                 <button className={`nav-link ${activeTab === "create" ? "active" : ""}`} onClick={() => setActiveTab("create")}>
