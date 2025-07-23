@@ -70,7 +70,7 @@ export default function TicketForm() {
     };
 
   return (
-    <div className="p-4 shadow-sm">
+    <div className="p-4">
         <h4 className="mb-4">Create a Ticket</h4>
 
         {submissionResult?.type === 'success' && (
