@@ -3,6 +3,7 @@ import axios from 'axios';
 import { AuthContext } from '../contexts/AuthContexts';
 import { useNavigate } from "react-router-dom";
 import { ToastContext } from '../contexts/ToastContext';
+import { Link } from 'react-router-dom';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -69,7 +70,7 @@ export default function LoginPage() {
                 </form>
                 <div className="text-center mt-3">
                     <span>New here? </span>
-                    <a href="/register">Create an account</a>
+                    <Link to="/register">Create an account</Link>
                 </div>
 
             </div>
