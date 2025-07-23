@@ -10,9 +10,13 @@ exports.register = async (req, res) => {
     try {
         const user = await User.create(req.body);
         res.json({ token: generateToken(user), user});
+        console.log(user)
     } catch (err) {
-        console.error("Registration error:", err.message);
-        res.status(400).json({ message: 'Registration failed, email exists.' });
+        if (err.code === 11000) {
+            const field = Object.keys(err.keyPattern)[0];
+            return res.status(400).json({ message: `${field.charAt(0).toUpperCase() + field.slice(1)} already exists` });
+        }
+        res.status(400).json({ message: err.message });
     }
 };
 

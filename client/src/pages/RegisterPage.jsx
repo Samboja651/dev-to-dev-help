@@ -6,6 +6,7 @@ import { ToastContext } from '../contexts/ToastContext';
 import { Link } from 'react-router-dom';
 
 export default function RegisterPage() {
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useContext(AuthContext);
@@ -17,15 +18,17 @@ export default function RegisterPage() {
     e.preventDefault();
     try {
       const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/auth/register`, {
+        username,
         email,
         password,
       });
       login(res.data.user, res.data.token); // auto login after registration
       // show feedback
-      showToast("Its a pressure to meet you");
+      showToast(`Its a pressure to meet you, ${res.data.user.username}`, "success");
       navigate("/");
     } catch (err) {
-      showToast(err.response?.data?.message, "danger");
+      const errorMsg = err.response?.data?.message || "Registration failed";
+      showToast(errorMsg, "danger");
     }
   };
 
@@ -35,6 +38,23 @@ export default function RegisterPage() {
             <h5 className="mb-4 text-center">Create an Account</h5>
 
             <form onSubmit={handleSubmit}>
+              
+                <div className="mb-3">
+                    <label className="form-label">Username</label>
+                    <div className="input-group">
+                        <span className="input-group-text">
+                            <i className="bi bi-person"></i>
+                        </span>
+                        <input
+                            type="name"
+                            className="form-control"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                        />
+                    </div>
+                </div>
+              
                 <div className="mb-3">
                     <label className="form-label">Email</label>
                     <div className="input-group">
