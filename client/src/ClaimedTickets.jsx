@@ -33,7 +33,7 @@ const ClaimedTickets = () => {
 
   return (
     <div className="container mt-4">
-      <h1>Claimed Tickets</h1>
+      <h1>Issues in Active Resolution</h1>
 
       {alertMsg && (
         <div className={`alert alert-${alertType} toast-timer`} role="alert">
@@ -42,7 +42,7 @@ const ClaimedTickets = () => {
       )}
 
       {tickets.length === 0 ? (
-        <p>No claimed tickets.</p>
+        <p>Nothing to fix yet.</p>
       ) : (
         <div className="row">
           {tickets.map((ticket) => (

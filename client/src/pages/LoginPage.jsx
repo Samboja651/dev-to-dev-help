@@ -25,7 +25,7 @@ export default function LoginPage() {
                 password,
             });
             login(res.data.user, res.data.token);
-            showToast("Great to see you again")
+            showToast(`Great to see you again ${res.data.user.username}`)
             //redirect to dashboard
             navigate("/");
         } catch (err) {
@@ -38,7 +38,7 @@ export default function LoginPage() {
         <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
             <div className="card p-4 shadow" style={{ width: '100%', maxWidth: '400px' }}>
                 <h5 className="mb-4 text-center">Login</h5>
-                {loading ? <Loader message='Authentication ...' /> : (
+                {loading ? <Loader message='Authenticating ...' /> : (
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label className="form-label">Email</label>

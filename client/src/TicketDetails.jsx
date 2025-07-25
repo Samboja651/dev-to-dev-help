@@ -159,7 +159,7 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
                                 onClick={handleUnifiedSubmit}
                                 disabled={!isSubmissionReady}
                             >
-                                Submit
+                                Resolve
                             </button>
                         </div>
 
@@ -168,7 +168,7 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
                 {ticket.status === 'open' && (
                     <div className="mt-auto d-flex justify-content-end">
                         <button className="btn btn-outline-primary btn-sm" onClick={handleClaim}>
-                            Claim Ticket
+                            Claim
                         </button>
                     </div>
                 )}

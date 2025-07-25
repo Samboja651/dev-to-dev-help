@@ -33,7 +33,7 @@ const OpenTickets = () => {
     );
     return (
         <div className="container mt-4">
-            <h1 className="mb-4">Open Tickets</h1>
+            <h1 className="mb-4">Open Issues</h1>
 
             {/* search input */}
             <input type="text"

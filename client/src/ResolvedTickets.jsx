@@ -19,7 +19,7 @@ const ResolvedTickets = () => {
 
     return (
         <div className="container mt-4">
-            <h1>Resolved Tickets</h1>
+            <h1>No more bugging</h1>
 
             {loading ? (
                 <Loader message="Fetching data..." />

@@ -56,7 +56,7 @@ export default function TicketForm() {
 
             if (res.ok) {
                 setFormData({ title: '', description: '', tags: '', urgency: 'medium' });
-                setSubmissionResult({ type: 'success', message: 'Ticket submitted successfully!' });
+                setSubmissionResult({ type: 'success', message: 'Success. Help is on the way' });
             } else {
                 setSubmissionResult({ type: 'error', message: data.message || 'Submission failed.' });
             }
@@ -71,7 +71,7 @@ export default function TicketForm() {
 
   return (
     <div className="p-4">
-        <h4 className="mb-4">Create a Ticket</h4>
+        <h4 className="mb-4">What technical issue do you have?</h4>
 
         {submissionResult?.type === 'success' && (
         <div className="card border-success mb-4 position-relative">
@@ -150,7 +150,7 @@ export default function TicketForm() {
             {isSubmitting ? (
                 <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
             ) : null}
-            {isSubmitting ? 'Submitting...' : 'Submit Ticket'}
+            {isSubmitting ? 'Submitting...' : 'Help'}
         </button>
 
         </form>
