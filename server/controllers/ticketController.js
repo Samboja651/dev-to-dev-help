@@ -132,14 +132,15 @@ exports.createTicket = async (req, res) => {
 // claim ticket
 exports.claimTicket = async (req, res) => {
     try {
-        const { helperId } = req.body;
+        const username = req.body.claimedBy;
+        console.log(username);
         const ticketId = req.params.id;
 
         const claimedTicket = await Ticket.findByIdAndUpdate(
             ticketId,
             {
                 status: 'claimed',
-                claimedBy: helperId,
+                claimedBy: username,
                 'timestamps.claimed': new Date(),
             },
             { new: true }

@@ -5,7 +5,7 @@ import Loader from './components/Loader';
 
 const ResolvedTickets = () => {
     const [tickets, setTickets] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         axios
@@ -13,7 +13,8 @@ const ResolvedTickets = () => {
             .then((res) => setTickets(res.data.data))
             .catch((err) => {
                 console.error('Error fetching resolved tickets:', err.message);
-            });
+            })
+            .finally(() => setLoading(false));
     }, []);
 
     return (

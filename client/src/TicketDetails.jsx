@@ -1,14 +1,17 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
+import { useContext } from "react";
+import { AuthContext } from "./contexts/AuthContexts";
 
 const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
     // state for markdown solution
     const [solutionInput, setSolutionInput] = useState('');
     const [meetInput, setMeetInput] = useState('');
+    const { user } = useContext(AuthContext);
 
     const isValidMeetLink = (url) => {
-        
+
         const meetRegex = /^https:\/\/meet\.google\.com\/[a-zA-Z0-9-]+$/;
         return meetRegex.test(url.trim())
     }
@@ -16,9 +19,10 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
 
     // handle ticket claiming
     const handleClaim = () => {
+        console.log("claimedby", user.username);
         axios
             .patch(`${process.env.REACT_APP_API_BASE_URL}/api/tickets/claim/${ticket._id}`, {
-                helperId: 'dev-helper-004' // later make this dynamic
+                claimedBy: user.username // later make this dynamic
             })
             .then((res) => {
                 onClaimSuccess(ticket._id); // removes ticket immediately                  
@@ -67,7 +71,7 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
     const handleUnifiedSubmit = () => {
         const trimmedDoc = solutionInput.trim();
         const trimmedMeet = meetInput.trim();
-        
+
         const hasDoc = trimmedDoc !== '';
         const hasMeet = trimmedMeet !== '';
         const meetIsValid = isValidMeetLink(trimmedMeet);
@@ -106,60 +110,60 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
 
                 <p><strong>Tags:</strong> {ticket.tags.join(', ')}</p>
 
-                {ticket.claimedBy && <p><strong>Claimed By:</strong> {ticket.claimedBy}</p>}
+                {ticket.claimedBy && <p><strong>Dev:</strong> {ticket.claimedBy}</p>}
 
                 {ticket.solutionDoc?.trim() && (
-                <div className="mt-3">
-                    <h6>Solution</h6>
-                    <ReactMarkdown>{ticket.solutionDoc}</ReactMarkdown>
-                    {ticket.timestamps?.resolved && (
-                        <p className="text-muted mt-2" style={{ fontSize: '0.85rem' }}>
-                            {new Date(ticket.timestamps.resolved).toLocaleDateString()}
-                        </p>
-                    )}
-                </div>
+                    <div className="mt-3">
+                        <h6>Solution</h6>
+                        <ReactMarkdown>{ticket.solutionDoc}</ReactMarkdown>
+                        {ticket.timestamps?.resolved && (
+                            <p className="text-muted mt-2" style={{ fontSize: '0.85rem' }}>
+                                {new Date(ticket.timestamps.resolved).toLocaleDateString()}
+                            </p>
+                        )}
+                    </div>
                 )}
 
                 {ticket.meetLink && (
-                <p className="mt-2">
-                    <strong>Google Meet:</strong>{' '}
-                    <a href={ticket.meetLink} target="_blank" rel="noopener noreferrer">
-                    Join Call
-                    </a>
-                </p>
+                    <p className="mt-2">
+                        <strong>Google Meet:</strong>{' '}
+                        <a href={ticket.meetLink} target="_blank" rel="noopener noreferrer">
+                            Join Call
+                        </a>
+                    </p>
                 )}
 
 
                 {ticket.status === 'claimed' && (
-                <>
-                    <div className="mt-4">
-                    <h6>Solution (Markdown)</h6>
-                    <textarea
-                        className="form-control"
-                        value={solutionInput}
-                        onChange={(e) => setSolutionInput(e.target.value)}
-                        rows={6}
-                        placeholder="Write markdown solution here"
-                    />
-                    <h6>Google Meet Link</h6>
-                    <input
-                        type="url"
-                        className="form-control"
-                        value={meetInput}
-                        onChange={(e) => setMeetInput(e.target.value)}
-                        placeholder="https://meet.google.com/your-code"
-                        title="optional"
-                    />
-                    <button 
-                        className={`btn btn-secondary mt-2 ${!isSubmissionReady ? 'disabled opacity-50' : ''}`}
-                        onClick={handleUnifiedSubmit}
-                        disabled={!isSubmissionReady}
-                    >
-                        Submit
-                    </button>
-                    </div>
+                    <>
+                        <div className="mt-4">
+                            <h6>Solution (Markdown)</h6>
+                            <textarea
+                                className="form-control"
+                                value={solutionInput}
+                                onChange={(e) => setSolutionInput(e.target.value)}
+                                rows={6}
+                                placeholder="Write markdown solution here"
+                            />
+                            <h6>Google Meet Link</h6>
+                            <input
+                                type="url"
+                                className="form-control"
+                                value={meetInput}
+                                onChange={(e) => setMeetInput(e.target.value)}
+                                placeholder="https://meet.google.com/your-code"
+                                title="optional"
+                            />
+                            <button
+                                className={`btn btn-secondary mt-2 ${!isSubmissionReady ? 'disabled opacity-50' : ''}`}
+                                onClick={handleUnifiedSubmit}
+                                disabled={!isSubmissionReady}
+                            >
+                                Submit
+                            </button>
+                        </div>
 
-                </>
+                    </>
                 )}
                 {ticket.status === 'open' && (
                     <div className="mt-auto d-flex justify-content-end">
