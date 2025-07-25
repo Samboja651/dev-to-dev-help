@@ -19,7 +19,6 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
 
     // handle ticket claiming
     const handleClaim = () => {
-        console.log("claimedby", user.username);
         axios
             .patch(`${process.env.REACT_APP_API_BASE_URL}/api/tickets/claim/${ticket._id}`, {
                 claimedBy: user.username // later make this dynamic
@@ -40,7 +39,7 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
                 status: 'resolved'
             })
             .then((res) => {
-                console.log('Patch res:', res.data);
+                // console.log('Patch res:', res.data);
                 onRemove(ticket._id);
                 onFeedback('✅ Solution submitted!');
             })

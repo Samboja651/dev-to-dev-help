@@ -10,7 +10,6 @@ exports.register = async (req, res) => {
     try {
         const user = await User.create(req.body);
         res.json({ token: generateToken(user), user});
-        console.log(user)
     } catch (err) {
         if (err.code === 11000) {
             const field = Object.keys(err.keyPattern)[0];

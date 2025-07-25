@@ -25,7 +25,7 @@ exports.submitDocSolution = async (req, res) => {
     try {
         const { solutionDoc } = req.body;
         const ticketId = req.params.id;
-        console.log('Received solutiondoc:', solutionDoc);
+        // console.log('Received solutiondoc:', solutionDoc);
         const updatedTicket = await Ticket.findByIdAndUpdate(
             ticketId,
             {
@@ -102,7 +102,7 @@ exports.createTicket = async (req, res) => {
             createdBy,
         } = req.body;
 
-        console.log('incoming ticket data:', req.body)
+        // console.log('incoming ticket data:', req.body)
         const newTicket = new Ticket({
             title,
             description,
@@ -133,7 +133,6 @@ exports.createTicket = async (req, res) => {
 exports.claimTicket = async (req, res) => {
     try {
         const username = req.body.claimedBy;
-        console.log(username);
         const ticketId = req.params.id;
 
         const claimedTicket = await Ticket.findByIdAndUpdate(

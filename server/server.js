@@ -6,7 +6,6 @@ const authRoutes = require('./routes/authRoutes');
 
 dotenv.config();
 process.env.JWT_SECRET
-console.log("secret is", process.env.JWT_SECRET);
 const ticketRoutes = require ('./routes/tickets');
 const cors = require('cors');
 
