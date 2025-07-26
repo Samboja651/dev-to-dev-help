@@ -6,7 +6,8 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const admin = require('firebase-admin');
 const path = require('path');
-const serviceAccount = require(path.join(__dirname, '..', process.env.FIREBASE_SERVICE_ACCOUNT_PATH));
+const serviceAccount = require('/etc/secrets/firebaseServiceAccount.json');
+
 
 if (!admin.apps.length) {
     admin.initializeApp({
