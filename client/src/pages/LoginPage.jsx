@@ -5,17 +5,20 @@ import { useNavigate } from "react-router-dom";
 import { ToastContext } from '../contexts/ToastContext';
 import { Link } from 'react-router-dom';
 import Loader from '../components/Loader';
+import { auth, provider } from "../firebase";
+import { signInWithPopup } from "firebase/auth";
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { login } = useContext(AuthContext);
+    
     const navigate = useNavigate();
     //show cool feedback messages
     const { showToast } = useContext(ToastContext);
     //show loading
     const [loading, setLoading] = useState(false);
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -32,6 +35,18 @@ export default function LoginPage() {
             showToast("Login failed: " + err.response?.data?.message, "danger");
         } finally {
             setLoading(false);
+        }
+    };
+    const handleGoogleLogin = async () => {
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            console.log("user", user);
+            showToast(`Welcome ${user.displayName}`, "success");
+            navigate("/");
+        } catch (err) {
+            console.error(err);
+            showToast("Google login failed", "danger");
         }
     };
     return (
@@ -75,6 +90,10 @@ export default function LoginPage() {
                         <button className="btn btn-primary w-100">Login</button>
                     </form>
                 )}
+                <button className="btn btn-outline-dark w-100 mt-2" onClick={handleGoogleLogin}>
+                <i className="bi bi-google me-2"></i> Sign in with Google
+                </button>
+
                 <div className="text-center mt-3">
                     <span>New here? </span>
                     <Link to="/register">Create an account</Link>
