@@ -1,5 +1,5 @@
 // api controller functions
-
+const axios = require('axios');
 const Ticket = require('../models/ticket');
 
 // get open tickets
@@ -101,7 +101,7 @@ exports.createTicket = async (req, res) => {
             urgency,
             createdBy,
         } = req.body;
-
+        
         // console.log('incoming ticket data:', req.body)
         const newTicket = new Ticket({
             title,
@@ -113,12 +113,25 @@ exports.createTicket = async (req, res) => {
                 created: new Date(),
             },
         });
-
+        
         const savedTicket = await newTicket.save();
+        
+        
         res.status(201).json({
             success: true,
             message: 'Ticket saved successfully',
             data: savedTicket
+        });
+        
+        // notify dev of a new user -> issue posted   
+        axios.post('https://hook.us2.make.com/1ubyst4iyblv3luec7vdkhpka8uf2ujq', {
+            title: savedTicket.title,
+            description: savedTicket.description,
+            urgency: savedTicket.urgency,
+            createdBy: savedTicket.createdBy,
+            createdAt: savedTicket.timestamps.created,
+        }).catch(err => {
+            console.error('Make webhook failed:', err.message);
         });
     } catch (err) {
         res.status(500).json({
