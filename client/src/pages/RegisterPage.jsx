@@ -16,6 +16,7 @@ export default function RegisterPage() {
   const { showToast } = useContext(ToastContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleGoogleSignup = async () => {
     setLoading(true);
@@ -103,12 +104,19 @@ export default function RegisterPage() {
                                 <i className="bi bi-lock"></i>
                             </span>
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 className="form-control"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
+                            <span
+                                className="input-group-text"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => setShowPassword((v) => !v)}
+                            >
+                                <i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}></i>
+                            </span>
                         </div>
                     </div>
 
