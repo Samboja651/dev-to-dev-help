@@ -3,7 +3,7 @@ const router = express.Router();
 const {
     getOpenTickets, submitDocSolution, createTicket,
     claimTicket, submitMeetSolution, claimedTickets,
-    resolvedTickets
+    resolvedTickets, unclaimTicket
 } = require('../controllers/ticketController');
 
 // POST: submit a new ticket
@@ -14,6 +14,9 @@ router.get('/open', getOpenTickets);
 
 // PATCH: claim a ticket
 router.patch('/claim/:id', claimTicket);
+
+// PATCH: unclaim a ticket
+router.patch('/unclaim/:id', unclaimTicket);
 
 // PATCH: submit a solution document
 router.patch('/solution/:id', submitDocSolution); 

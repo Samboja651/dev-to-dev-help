@@ -215,3 +215,33 @@ exports.resolvedTickets = async (req, res) => {
         });
     }
 };
+
+// PATCH: unclaim a ticket
+exports.unclaimTicket = async (req, res) => {
+    try {
+        const ticketId = req.params.id;
+        const updatedTicket = await require('../models/ticket').findByIdAndUpdate(
+            ticketId,
+            {
+                status: 'open',
+                claimedBy: null,
+                'timestamps.claimed': null
+            },
+            { new: true }
+        );
+        if (!updatedTicket) {
+            return res.status(404).json({ success: false, message: 'Ticket not found' });
+        }
+        res.status(200).json({
+            success: true,
+            message: 'Ticket unclaimed successfully',
+            data: updatedTicket
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: 'Failed to unclaim ticket',
+            error: err.message
+        });
+    }
+};

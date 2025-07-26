@@ -30,6 +30,21 @@ const ClaimedTickets = () => {
     }, 5000); // 5s toast duration
   };
 
+  const handleDropTicket = async (id) => {
+    try {
+      await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/api/tickets/unclaim/${id}`);
+      setTickets(prev => prev.filter(t => t._id !== id));
+      setAlertMsg('Ticket dropped and returned to open tickets.');
+      setAlertType('info');
+      setTimeout(() => {
+        setAlertMsg('');
+        setAlertType('');
+      }, 5000);
+    } catch (err) {
+      setAlertMsg('Failed to drop ticket.');
+      setAlertType('danger');
+    }
+  };
 
   return (
     <div className="container mt-4">
@@ -51,6 +66,7 @@ const ClaimedTickets = () => {
                 ticket={ticket}
                 onFeedback={handleFeedback}
                 onRemove={handleRemoveTicket}
+                onDrop={handleDropTicket}
               />
             </div>
           ))}

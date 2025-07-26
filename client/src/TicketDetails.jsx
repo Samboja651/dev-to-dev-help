@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import { useContext } from "react";
 import { AuthContext } from "./contexts/AuthContexts";
 
-const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
+const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove, onDrop }) => {
     // state for markdown solution
     const [solutionInput, setSolutionInput] = useState('');
     const [meetInput, setMeetInput] = useState('');
@@ -92,6 +92,10 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
         }
     };
 
+    const handleDrop = () => {
+        if (onDrop) onDrop(ticket._id);
+    };
+
     // layout
     return (
         <div className="card mb-4 h-100 d-flex flex-column">
@@ -153,13 +157,19 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove }) => {
                                 placeholder="https://meet.google.com/your-code"
                                 title="optional"
                             />
-                            <button
-                                className={`btn btn-secondary mt-2 ${!isSubmissionReady ? 'disabled opacity-50' : ''}`}
-                                onClick={handleUnifiedSubmit}
-                                disabled={!isSubmissionReady}
-                            >
-                                Resolve
-                            </button>
+                            <div className="mt-4 d-flex justify-content-between">
+                                <button
+                                    className={`btn btn-secondary mt-2 ${!isSubmissionReady ? 'disabled opacity-50' : ''}`}
+                                    onClick={handleUnifiedSubmit}
+                                    disabled={!isSubmissionReady}
+                                    style={{ width: '120px' }}
+                                >
+                                    Resolve
+                                </button>
+                                <button className="btn btn-outline-danger mt-2" onClick={handleDrop} style={{ width: '120px' }}>
+                                    Drop
+                                </button>
+                            </div>                            
                         </div>
 
                     </>
