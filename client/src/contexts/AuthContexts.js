@@ -4,6 +4,7 @@ export const AuthContext = createContext();
 export default function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
+    const [loading, setLoading] = useState(true);
     
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -13,6 +14,7 @@ export default function AuthProvider({ children }) {
             setUser(JSON.parse(storedUser));
             setToken(storedToken);
         }
+        setLoading(false);
     }, []);
 
     const login = (userData, token) => {
@@ -28,7 +30,15 @@ export default function AuthProvider({ children }) {
         setUser(null);
         setToken(null);
     };
-
+    if (loading) {
+        return (
+            <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        );
+    }
     return (
         <AuthContext.Provider value={{ user, token, login, logout }}>
             {children}
