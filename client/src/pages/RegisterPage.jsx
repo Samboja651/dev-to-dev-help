@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { ToastContext } from '../contexts/ToastContext';
 import { Link } from 'react-router-dom';
 import Loader from '../components/Loader';
+import { auth, provider } from "../firebase";
+import { signInWithPopup } from "firebase/auth";
 
 export default function RegisterPage() {
   const [username, setUsername] = useState('');
@@ -13,8 +15,26 @@ export default function RegisterPage() {
   const { login } = useContext(AuthContext);
   const { showToast } = useContext(ToastContext);
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
+
+  const handleGoogleSignup = async () => {
+    setLoading(true);
+    try {
+        const result = await signInWithPopup(auth, provider);
+        const idToken = await result.user.getIdToken();
+        // send idtoken to server
+        const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/auth/google`, { idToken });
+        login(res.data.user, res.data.token);
+        // show success message 
+        showToast(`Welcome ${result.user.displayName}`, "success");
+        navigate("/");
+    } catch (err) {
+        console.error(err); 
+        showToast("Google login failed", "danger");
+    } finally { 
+        setLoading(false);
+    }
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,6 +115,9 @@ export default function RegisterPage() {
                     <button className="btn btn-primary w-100">Register</button>
                 </form>
             )}
+            <button className="btn btn-outline-dark w-100 mt-2" onClick={handleGoogleSignup}>
+                <i className="bi bi-google me-2"></i> Sign up with Google
+            </button>
             <div className="text-center mt-3">
                 <span>Have an account? </span>
                 <Link to="/login">login</Link>
