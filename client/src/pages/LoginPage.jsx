@@ -42,7 +42,6 @@ export default function LoginPage() {
         try {
             const result = await signInWithPopup(auth, provider);
             const idToken = await result.user.getIdToken();
-            console.log("idToken", idToken);
             // send idtoken to server
             const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/auth/google`, { idToken });
             login(res.data.user, res.data.token);
