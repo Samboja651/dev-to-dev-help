@@ -5,8 +5,9 @@ const router = express.Router();
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const admin = require('firebase-admin');
-const path = require('path');
-const serviceAccount = require('/etc/secrets/firebaseServiceAccount.json');
+const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT
+  ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)
+  : require('../config/firebaseServiceAccountKey.json');
 
 
 if (!admin.apps.length) {
