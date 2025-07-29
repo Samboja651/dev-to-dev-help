@@ -7,14 +7,13 @@ import axios from "axios";
 export default function TicketForm() {
     const API_BASE = process.env.REACT_APP_API_BASE_URL;
     const { user } = useContext(AuthContext);
-    const [imageFile, setImageFile] = useState(null);
     const [imageUrl, setImageUrl] = useState('');
 
     const [formData, setFormData] = useState({
         title: '',
         description: '',
         tags: '',
-        urgency: 'medium', // 👈 Add this default
+        urgency: 'medium',
     });
 
     
@@ -84,7 +83,7 @@ export default function TicketForm() {
             setSubmissionResult({ type: 'error', message: 'Image size must be lest than 5MB.' });
             return;
         }
-        setImageFile(file);
+        // setImageFile(file);
         if (file) {
             const formData = new FormData();
             formData.append('image', file);
@@ -161,7 +160,7 @@ export default function TicketForm() {
             />
             {imageUrl && (
             <div className="mt-2">
-                <img src={imageUrl} alt="image showing the problem" style={{ maxWidth: '100%' }} />
+                <img src={imageUrl} alt="problem screenshot" style={{ maxWidth: '100%' }} />
             </div>
             )}
         </div>
