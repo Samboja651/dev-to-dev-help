@@ -1,9 +1,20 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+const upload = multer({ 
+    storage: multer.memoryStorage() ,
+    limits: { fileSize: 5 * 1024 * 1024 }, // Limit to 5MB
+    fileFilter: (req, file, cb) => {
+        if (!file.mimetype.startsWith('image/')) {
+            return cb(new Error('Only image files are allowed!'), false);
+        }
+        cb(null, true);
+    }
+});
 const {
     getOpenTickets, submitDocSolution, createTicket,
     claimTicket, submitMeetSolution, claimedTickets,
-    resolvedTickets, unclaimTicket
+    resolvedTickets, unclaimTicket, uploadImage
 } = require('../controllers/ticketController');
 
 // POST: submit a new ticket
@@ -29,5 +40,8 @@ router.get('/claimed', claimedTickets);
 
 // GET: fetch resolved tickets
 router.get('/resolved', resolvedTickets);
+
+// POST: upload an image to Cloudinary
+router.post('/upload-image', upload.single('image'), uploadImage);
 
 module.exports = router

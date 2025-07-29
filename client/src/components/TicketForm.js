@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContexts";
+import axios from "axios";
 
 
 export default function TicketForm() {
     const API_BASE = process.env.REACT_APP_API_BASE_URL;
     const { user } = useContext(AuthContext);
+    const [imageFile, setImageFile] = useState(null);
+    const [imageUrl, setImageUrl] = useState('');
 
     const [formData, setFormData] = useState({
         title: '',
@@ -39,7 +42,8 @@ export default function TicketForm() {
         const payload = {
             ...formData,
             tags: formData.tags.split(',').map(tag => tag.trim()),
-            createdBy: user?._id
+            createdBy: user?._id,
+            imageUrl, // Include image URL if available
         };
 
         setIsSubmitting(true);
@@ -68,6 +72,34 @@ export default function TicketForm() {
         }
 
     };
+
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        if (!file.type.startsWith('image/')) {
+            setSubmissionResult({ type: 'error', message: 'Only image files are allowed.' });
+            return;
+        }
+        if (file.size > 5 * 1024 * 1024) { // 5MB limit
+            setSubmissionResult({ type: 'error', message: 'Image size must be lest than 5MB.' });
+            return;
+        }
+        setImageFile(file);
+        if (file) {
+            const formData = new FormData();
+            formData.append('image', file);
+            try {
+                const res = await axios.post(
+                    `${API_BASE}/api/tickets/upload-image`,
+                    formData,
+                    { headers: { 'Content-Type': 'multipart/form-data' } }
+                );
+                setImageUrl(res.data.imageUrl);
+            } catch (err) {
+                setSubmissionResult({ type: 'error', message: 'Image upload failed.' });
+            }
+        }
+    }
 
   return (
     <div className="p-4">
@@ -117,6 +149,21 @@ export default function TicketForm() {
             onChange={handleChange}
             required
             />
+        </div>
+
+        <div className="mb-3">
+            <label htmlFor="image" className="form-label">Upload a screenshot (optional)</label>
+            <input
+                type="file"
+                accept="image/*"
+                className="form-control"
+                onChange={handleImageUpload}
+            />
+            {imageUrl && (
+            <div className="mt-2">
+                <img src={imageUrl} alt="image showing the problem" style={{ maxWidth: '100%' }} />
+            </div>
+            )}
         </div>
 
         <div className="mb-3">

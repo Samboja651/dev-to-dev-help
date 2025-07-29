@@ -1,6 +1,9 @@
 // api controller functions
 const axios = require('axios');
 const Ticket = require('../models/ticket');
+const cloudinary = require('../config/cloudinary');
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
 
 // get open tickets
 exports.getOpenTickets = async (req, res) => {
@@ -100,6 +103,7 @@ exports.createTicket = async (req, res) => {
             tags,
             urgency,
             createdBy,
+            imageUrl
         } = req.body;
         
         // console.log('incoming ticket data:', req.body)
@@ -109,6 +113,7 @@ exports.createTicket = async (req, res) => {
             tags,
             urgency,
             createdBy,
+            imageUrl,
             timestamps: {
                 created: new Date(),
             },
@@ -119,7 +124,7 @@ exports.createTicket = async (req, res) => {
         
         res.status(201).json({
             success: true,
-            message: 'Ticket saved successfully',
+            message: 'Issue posted successfully',
             data: savedTicket
         });
         
@@ -136,7 +141,7 @@ exports.createTicket = async (req, res) => {
     } catch (err) {
         res.status(500).json({
             success: false,
-            message: 'Failed to create ticket',
+            message: 'Failed to post issue',
             error: err.message
         });
     }
@@ -241,6 +246,43 @@ exports.unclaimTicket = async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Failed to unclaim ticket',
+            error: err.message
+        });
+    }
+};
+
+// upload image
+exports.uploadImage = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: 'No file uploaded' });
+        }
+
+        // Use a Promise to wrap the upload_stream
+        const streamUpload = (buffer) => {
+            return new Promise((resolve, reject) => {
+                const stream = cloudinary.uploader.upload_stream(
+                    { resource_type: 'image', folder: 'ticket_images' },
+                    (error, result) => {
+                        if (error) return reject(error);
+                        resolve(result);
+                    }
+                );
+                stream.end(buffer);
+            });
+        };
+
+        const result = await streamUpload(req.file.buffer);
+
+        res.status(200).json({
+            success: true,
+            message: 'Image uploaded successfully',
+            imageUrl: result.secure_url
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: 'Failed to upload image',
             error: err.message
         });
     }

@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const admin = require('firebase-admin');
 const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT
   ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)
-  : require('../config/firebaseServiceAccountKey.json');
+  : require('../firebaseServiceAccount.json');
 
 
 if (!admin.apps.length) {

@@ -48,5 +48,9 @@ const ticketSchema = new mongoose.Schema({
         claimed: Date,
         resolved: Date,
     },
+    imageUrl: {
+        type: String,
+        default: '',
+    },
 });
 module.exports = mongoose.model('Ticket', ticketSchema);

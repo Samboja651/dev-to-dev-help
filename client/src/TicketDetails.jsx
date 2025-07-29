@@ -114,7 +114,14 @@ const TicketDetails = ({ ticket, onClaimSuccess, onFeedback, onRemove, onDrop })
                 <p><strong>Tags:</strong> {ticket.tags.join(', ')}</p>
 
                 {ticket.claimedBy && <p><strong>Dev:</strong> {ticket.claimedBy}</p>}
-
+                
+                {ticket.imageUrl && (
+                    <div className="mb-3">
+                        <h6>Problem</h6>
+                        <img src={ticket.imageUrl} alt="image showing the problem being solved" className="img-fluid rounded" />
+                    </div>
+                )}
+                
                 {ticket.solutionDoc?.trim() && (
                     <div className="mt-3">
                         <h6>Solution</h6>
