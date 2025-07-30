@@ -129,11 +129,12 @@ The app will run at [http://localhost:3000](http://localhost:3000).
 
 ---
 
-# Message from the Dev
+## Message from the Dev
 
 I love exploring, the mission here was to gain experience in using new tools
 e.g
 experince using
+
 - nosql databases -> **Mongodb**
 - storing and retrieving media files on -> **cloudinary**. Typically
 someone would have used the db. But separating media and other user data
@@ -147,6 +148,7 @@ was high.
 - managing sessions using **Json Web Tokens**
 - Expressing my creativity without limitation of tech skills -> **Vibe Coding**. I used **Copilot and GPT 4.1**. I was able to quickly transform
 my thoughts.
+
 ---
 
 ## 📚 Documentation
