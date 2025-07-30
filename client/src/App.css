@@ -70,3 +70,14 @@
   }
 }
 
+/* App.css */
+.buy-coffee-btn {
+  transition: box-shadow 0.2s, transform 0.2s, background 0.2s;
+}
+.buy-coffee-btn:hover, .buy-coffee-btn:focus {
+  box-shadow: 0 0 0 0.2rem #fc575e33;
+  transform: translateY(-2px) scale(1.04);
+  background: linear-gradient(90deg, #fc575e 0%, #f7b42c 100%);
+  color: #fff !important;
+  text-decoration: none;
+}
