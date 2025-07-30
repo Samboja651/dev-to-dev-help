@@ -1,70 +1,90 @@
-# Getting Started with Create React App
+# Xperience Debugging – Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the **Xperience Debugging - UI**
+This is the React-based client for the Xperience Debugging platform, where developers can post issues, upload screenshots, and collaborate live to solve bugs.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+- Modern React UI with Bootstrap 5 and Bootstrap Icons
+- Animated, interactive landing page
+- User authentication (email/password & Google)
+- Post, claim, and resolve debugging tickets
+- Image upload (Cloudinary)
+- Responsive design for desktop and mobile
+- "Buy me Coffee" PayPal support
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🛠️ Technologies & Tools
 
-### `npm test`
+- [React 19](https://react.dev/)
+- [Bootstrap 5](https://getbootstrap.com/)
+- [Bootstrap Icons](https://icons.getbootstrap.com/)
+- [Animate.css](https://animate.style/)
+- [Firebase Auth](https://firebase.google.com/)
+- [Cloudinary](https://cloudinary.com/) (for image uploads)
+- [Axios](https://axios-http.com/)
+- [React Router v7](https://reactrouter.com/)
+- [GitBook](https://www.gitbook.com/) for documentation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## ⚙️ Local Setup
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Clone the repository:**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```sh
+   git clone https://github.com/yourusername/xperience-debugging.git
+   cd xperience-debugging/client
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. **Install dependencies:**
 
-### `npm run eject`
+   ```sh
+   npm install
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. **Configure environment variables:**
+   - Copy `.env.example` to `.env` (if provided) or create `.env`:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+     ```env
+     REACT_APP_API_BASE_URL=http://localhost:5000
+     REACT_APP_FIREBASE_API_KEY=your_firebase_key
+     REACT_APP_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
+     REACT_APP_FIREBASE_PROJECT_ID=your_firebase_project_id
+     REACT_APP_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
+     REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_firebase_sender_id
+     REACT_APP_FIREBASE_APP_ID=your_firebase_app_id
+     REACT_APP_PAYPAL_PAYMENT_LINK=""
+     ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. **Start the development server:**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```sh
+   npm start
+   ```
 
-## Learn More
+   The app will run at [http://localhost:3000](http://localhost:3000).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 📚 Documentation
 
-### Code Splitting
+- Full documentation is available on [GitBook](https://your-gitbook-url.gitbook.io/xperience-debugging/).
+- All code and documentation are synced with GitHub.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## 🤝 Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change. Alternative you can fork the repo.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 📄 License
 
-### Advanced Configuration
+MIT
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
