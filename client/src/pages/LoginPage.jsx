@@ -39,6 +39,7 @@ export default function LoginPage() {
         }
     };
     const handleGoogleLogin = async () => {
+        setLoading(true);
         try {
             const result = await signInWithPopup(auth, provider);
             const idToken = await result.user.getIdToken();
@@ -52,6 +53,8 @@ export default function LoginPage() {
         } catch (err) {
             console.error(err);
             showToast("Google login failed", "danger");
+        } finally {
+            setLoading(false);
         }
     };
     return (
