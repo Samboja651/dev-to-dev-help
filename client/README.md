@@ -36,7 +36,7 @@ This is the React-based client for the Xperience Debugging platform, where devel
 1. **Clone the repository:**
 
    ```sh
-   git clone https://github.com/yourusername/xperience-debugging.git
+   git clone https://github.com/Samboja651/dev-to-dev-help.git
    cd xperience-debugging/client
    ```
 
@@ -72,7 +72,7 @@ This is the React-based client for the Xperience Debugging platform, where devel
 
 ## 📚 Documentation
 
-- Full documentation is available on [GitBook](https://your-gitbook-url.gitbook.io/xperience-debugging/).
+- Full documentation is available on [GitBook](https://dev-to-dev.gitbook.io/dev-to-dev-docs/client).
 - All code and documentation are synced with GitHub.
 
 ---

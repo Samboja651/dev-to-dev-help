@@ -2,7 +2,9 @@
 
 Welcome to **Xperience Debugging** – a collaborative platform where developers can post issues, upload screenshots, and collaborate live to solve bugs, faster.
 
-<https://dev-to-dev-frontend.onrender.com/>
+🌐 <https://dev-to-dev-frontend.onrender.com/>
+
+🌐 [Full Documentation](https://dev-to-dev.gitbook.io/dev-to-dev-docs/)
 
 ---
 
@@ -48,6 +50,7 @@ Welcome to **Xperience Debugging** – a collaborative platform where developers
 **Documentation:**
 
 - [GitBook](https://www.gitbook.com/)
+- [Mermaid](https://mermaidchart.cello.so/U8XjwGbZV9M)
 
 ---
 
@@ -56,7 +59,7 @@ Welcome to **Xperience Debugging** – a collaborative platform where developers
 ### 1. Clone the repository
 
 ```sh
-git clone https://github.com/yourusername/xperience-debugging.git
+git clone https://github.com/Samboja651/dev-to-dev-help.git
 cd xperience-debugging
 ```
 
@@ -135,17 +138,19 @@ I love exploring, the mission here was to gain experience in using new tools
 e.g
 experince using
 
-- nosql databases -> **Mongodb**
-- storing and retrieving media files on -> **cloudinary**. Typically
+- nosql databases -> **Mongodb**.
+- Storing and retrieving media files on -> **cloudinary**. Typically
 someone would have used the db. But separating media and other user data
 saves on the db work.
-- containerizing applications using **docker**
-- deploying containers on **google cloud**. After one day my expense was $3
-and I hastly droped the deployment. Containerizing and deploying on **gcloud** was efficient because my app ran without downtime but the cost
+- Containerizing applications using **docker**
+- Deploying containers on **google cloud**. After one day my expense was $3
+and I hastly droped the deployment. Containerizing and deploying on **gcloud** was efficient because my app run without downtime but the cost
 was high.
-- deployment on **render.com** freemium service.
-- Authenticating user with their google accounts using **firebase**
-- managing sessions using **Json Web Tokens**
+- Deployment on **render.com** freemium service.
+- Authenticating user with their google accounts using **firebase**.
+- Managing sessions using **Json Web Tokens**.
+- Publishing this documentation on **Gitbook**.
+- Designing **ERD & flowcharts** using **Mermaid**.
 - Expressing my creativity without limitation of tech skills -> **Vibe Coding**. I used **Copilot and GPT 4.1**. I was able to quickly transform
 my thoughts.
 
@@ -153,7 +158,7 @@ my thoughts.
 
 ## 📚 Documentation
 
-- Full documentation is available on [GitBook](https://your-gitbook-url.gitbook.io/xperience-debugging/).
+- Full documentation is available on [GitBook](https://dev-to-dev.gitbook.io/dev-to-dev-docs/).
 - All code and documentation are synced with GitHub.
 
 ---
