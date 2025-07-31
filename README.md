@@ -151,6 +151,7 @@ was high.
 - Managing sessions using **Json Web Tokens**.
 - Publishing this documentation on **Gitbook**.
 - Designing **ERD & flowcharts** using **Mermaid**.
+- **Google Analytics** on site visits.
 - Expressing my creativity without limitation of tech skills -> **Vibe Coding**. I used **Copilot and GPT 4.1**. I was able to quickly transform
 my thoughts.
 
