@@ -28,5 +28,26 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <!-- Cookie Consent by Osano -->
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+    <script>
+    window.addEventListener("load", function(){
+      window.cookieconsent.initialise({
+        palette: {
+          popup: { background: "#007bff" },
+          button: { background: "#fc575e" }
+        },
+        theme: "classic",
+        position: "bottom-right",
+        content: {
+          message: "This site uses cookies for analytics and to enhance your experience.",
+          dismiss: "Got it!",
+          link: "Learn more",
+          href: "https://policies.google.com/technologies/cookies"
+        }
+      })
+    });
+    </script>
   </body>
 </html>
