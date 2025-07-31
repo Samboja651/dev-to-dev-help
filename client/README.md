@@ -1,4 +1,4 @@
-# Xperience Debugging – Client
+# Client
 
 Welcome to the **Xperience Debugging - UI**
 This is the React-based client for the Xperience Debugging platform, where developers can post issues, upload screenshots, and collaborate live to solve bugs.

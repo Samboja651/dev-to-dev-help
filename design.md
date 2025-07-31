@@ -1,4 +1,4 @@
-# Diargrams
+# Designs
 
 ## ERD
 

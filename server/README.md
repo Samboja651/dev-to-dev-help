@@ -1,4 +1,4 @@
-# Xperience Debugging – Server
+# Server
 
 This is the Express.js backend for the Xperience Debugging platform.  
 It provides RESTful APIs for ticket management, authentication, and image uploads.
